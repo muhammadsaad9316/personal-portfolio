@@ -6,6 +6,8 @@ import Contact from '@/components/sections/Contact';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 import { getCachedSkills } from '@/lib/cache';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
     const skills = await getCachedSkills();
 
