@@ -10,8 +10,8 @@ export const CustomCursor = () => {
     useEffect(() => {
         const updateMousePosition = (e: MouseEvent) => {
             setMousePosition({
-                x: e.clientX,
-                y: e.clientY
+                x: e.clientX / 0.75,  // Compensate for body zoom: 0.75
+                y: e.clientY / 0.75   // Compensate for body zoom: 0.75
             });
         };
 
