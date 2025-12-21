@@ -7,12 +7,11 @@ async function getProjects(): Promise<SerializableProject[]> {
     const projects = await getCachedFeaturedProjects();
 
     // Convert Date objects to ISO strings for client component if they exist
-    // Note: getCachedFeaturedProjects select doesn't include createdAt/updatedAt currently
-    // but the SerializableProject type might expect them. Let's check the type or just select them.
+    // Add null safety to prevent crashes when dates are undefined
     return projects.map(p => ({
         ...p,
-        createdAt: p.createdAt.toISOString(),
-        updatedAt: p.updatedAt.toISOString(),
+        createdAt: p.createdAt?.toISOString() ?? new Date().toISOString(),
+        updatedAt: p.updatedAt?.toISOString() ?? new Date().toISOString(),
     })) as SerializableProject[];
 }
 
