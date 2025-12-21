@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import MessageList from '@/components/admin/MessageList';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminMessages() {
     const messages = await prisma.message.findMany({
         orderBy: { createdAt: 'desc' },

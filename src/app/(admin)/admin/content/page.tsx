@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma';
 import HeroEditor from '@/components/admin/HeroEditor';
 import AboutEditor from '@/components/admin/AboutEditor';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminContent() {
     // Fetch existing content to pre-fill forms
     const heroContent = await prisma.pageContent.findUnique({

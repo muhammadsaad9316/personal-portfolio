@@ -3,6 +3,8 @@ import SkillItem from '@/components/admin/SkillItem';
 import AddSkillForm from '@/components/admin/AddSkillForm';
 import styles from './AdminSkills.module.css';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminSkills() {
     const skills = await prisma.skill.findMany({
         orderBy: { order: 'asc' },
