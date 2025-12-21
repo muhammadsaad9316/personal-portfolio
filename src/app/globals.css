@@ -93,6 +93,8 @@ body {
   overflow-x: hidden;
   /* Use Inter font */
   font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  /* Global scale: Makes entire website 25% smaller */
+  zoom: 0.75;
 }
 
 /* Noise Texture Overlay */
