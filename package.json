@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "analyze": "cross-env ANALYZE=true next build"
+    "analyze": "cross-env ANALYZE=true next build",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.4.0",
