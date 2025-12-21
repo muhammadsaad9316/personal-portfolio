@@ -1,0 +1,315 @@
+.section {
+    padding: 8rem 0;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.sectionTitle {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4rem;
+    gap: 2rem;
+}
+
+.controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.toggleBtn {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--muted-foreground);
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggleBtn:hover {
+    border-color: var(--foreground);
+    color: var(--foreground);
+}
+
+.toggleActive {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(300px, auto);
+    gap: 2rem;
+}
+
+/* Bento Patterns */
+.card:nth-child(1) {
+    grid-column: span 8;
+}
+
+.card:nth-child(2) {
+    grid-column: span 4;
+}
+
+.card:nth-child(3) {
+    grid-column: span 5;
+}
+
+.card:nth-child(4) {
+    grid-column: span 7;
+}
+
+@media (max-width: 968px) {
+    .card:nth-child(n) {
+        grid-column: span 12;
+    }
+}
+
+.card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    height: 100%;
+    /* GPU acceleration for hover effects */
+    will-change: transform, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.card:hover {
+    border-color: var(--primary-glow);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px var(--primary-glow);
+}
+
+.imageContainer {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--muted);
+    overflow: hidden;
+    position: relative;
+}
+
+.statusBadge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(8px);
+}
+
+.statusLive {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.statusInDevelopment {
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #f59e0b;
+}
+
+.statusCompleted {
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #6366f1;
+}
+
+.techOverlay {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 10;
+    display: flex;
+    gap: 0.4rem;
+}
+
+.techIconMini {
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.imageContainer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+.projectImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    /* GPU acceleration for scale transform */
+    will-change: transform, filter;
+    backface-visibility: hidden;
+}
+
+.card:hover .projectImage {
+    filter: grayscale(0);
+    transform: scale(1.1) translateZ(0);
+}
+
+.cardContent {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.cardTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--foreground);
+}
+
+.cardDesc {
+    color: var(--muted-foreground);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+}
+
+.tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.links {
+    display: flex;
+    gap: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 1.5rem;
+    margin-top: auto;
+}
+
+.link {
+    font-weight: 600;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.expandIcon {
+    color: var(--muted-foreground);
+    transition: transform 0.3s ease;
+}
+
+.expanded {
+    transform: rotate(90deg);
+}
+
+.caseStudy {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.processItem {
+    margin-bottom: 1rem;
+}
+
+.processItem:last-child {
+    margin-bottom: 0;
+}
+
+.processLabel {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.05em;
+}
+
+.processText {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--foreground);
+    opacity: 0.8;
+}
+
+.link:hover {
+    color: var(--foreground);
+    transform: translateX(3px);
+}
+
+/* Accessibility: Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+    .card,
+    .projectImage,
+    .toggleBtn {
+        transition: none;
+        animation: none;
+        will-change: auto;
+    }
+
+    .card:hover .projectImage {
+        transform: scale(1);
+    }
+
+    .card {
+        will-change: auto;
+    }
+}

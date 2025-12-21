@@ -1,0 +1,463 @@
+.section {
+    padding: 10rem 0;
+    position: relative;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    align-items: start;
+}
+
+.stickySide {
+    position: sticky;
+    top: 8rem;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+}
+
+.text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--muted-foreground);
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.bioContainer {
+    margin-bottom: 3rem;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--primary);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.pinPulse {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    background: var(--primary);
+    border-radius: 50%;
+}
+
+.pinPulse::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 1px solid var(--primary);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+/* Degree Progress */
+.progressCard {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-top: 2.5rem;
+}
+
+.progressHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.progressLabel {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.9;
+    color: var(--primary);
+}
+
+.progressPercent {
+    font-family: var(--font-mono);
+    color: var(--primary);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.progressBarWrapper {
+    position: relative;
+    padding: 1.5rem 0 1rem 0;
+}
+
+.progressBarContainer {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 999px;
+    position: relative;
+    overflow: visible;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progressBar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 999px;
+    filter: drop-shadow(0 0 8px var(--primary-glow));
+    position: relative;
+    /* GPU acceleration for width animation */
+    will-change: width;
+    transform: translateZ(0);
+}
+
+.milestone {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 2px solid var(--background);
+    border-radius: 50%;
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+.milestone:hover {
+    transform: translate(-50%, -50%) scale(1.5);
+    background: var(--primary);
+}
+
+.milestoneLabel {
+    position: absolute;
+    top: -1.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0.5;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.progressInfo {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.statCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: all 0.3s ease;
+    /* GPU acceleration */
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.statCard:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary);
+    transform: translateY(-5px) translateZ(0);
+}
+
+.statIcon {
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+    opacity: 0.8;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--foreground);
+    font-family: var(--font-mono);
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.5;
+    font-weight: 600;
+}
+
+/* Learning Badges */
+.learningBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    background: rgba(144, 137, 252, 0.1);
+    border: 1px solid rgba(144, 137, 252, 0.2);
+    border-radius: 999px;
+    color: var(--primary);
+}
+
+.learningDot {
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--primary);
+    animation: learningPulse 2s infinite;
+}
+
+@keyframes learningPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(1.5);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    70% {
+        transform: scale(3);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Timeline */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.timelineHeading {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
+    opacity: 0.4;
+    margin-bottom: 3rem;
+}
+
+.timelineContent {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timelineLine {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--primary), var(--accent), transparent);
+    z-index: 1;
+}
+
+.timelineLine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    filter: blur(4px);
+    opacity: 0.3;
+}
+
+.timelineItem {
+    position: relative;
+    margin-bottom: 4rem;
+}
+
+.timelineMarker {
+    position: absolute;
+    left: -2.5rem;
+    top: 0;
+    width: 3rem;
+    height: 3rem;
+    background: var(--background);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.educationType .timelineMarker {
+    color: var(--primary);
+    border-color: rgba(144, 137, 252, 0.3);
+}
+
+.experienceType .timelineMarker {
+    color: var(--accent);
+    border-color: rgba(34, 211, 238, 0.3);
+}
+
+.timelineItem:hover .timelineMarker {
+    box-shadow: 0 0 20px var(--primary-glow);
+    transform: scale(1.1);
+}
+
+.experienceType:hover .timelineMarker {
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+    border-color: var(--accent);
+}
+
+.educationType:hover .timelineMarker {
+    border-color: var(--primary);
+}
+
+.timelineContentCard {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.timelineContentCard:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(10px);
+}
+
+.timeWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    opacity: 0.8;
+}
+
+.itemTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+}
+
+.provider {
+    color: var(--foreground);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+}
+
+.itemDesc {
+    color: var(--muted-foreground);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.currentBadge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: #10b981;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+}
+
+/* Learning Section */
+.learningSection {
+    margin-top: 2rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.learningItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 0.75rem;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.learningItem:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.learningIcon {
+    color: var(--primary);
+    opacity: 0.6;
+}
+
+@media (max-width: 968px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .stickySide {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

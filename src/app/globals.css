@@ -1,0 +1,318 @@
+:root {
+  /* Premium Dark Theme Palette */
+  --background: #030712;
+  /* Deep Charcoal */
+  --foreground: #f8fafc;
+
+  --primary: #6366f1;
+  /* Indigo 500 */
+  --primary-glow: rgba(99, 102, 241, 0.4);
+
+  --secondary: #a855f7;
+  /* Purple 500 */
+  --secondary-glow: rgba(168, 85, 247, 0.4);
+
+  --accent: #06b6d4;
+  /* Cyan 500 */
+  --accent-glow: rgba(6, 182, 212, 0.4);
+
+  --success: #10b981;
+  /* Green 500 */
+  --success-glow: rgba(16, 185, 129, 0.4);
+
+  --warning: #f59e0b;
+  /* Amber 500 */
+  --warning-glow: rgba(245, 158, 11, 0.4);
+
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.05);
+
+  --bg-projects: #040816;
+  --bg-skills: #060416;
+  --bg-about: #030612;
+
+  /* Retaining original vars for compatibility if needed */
+  --radius: 0.5rem;
+  --input: #1e293b;
+  --ring: #6366f1;
+}
+
+[data-theme='light'] {
+  --background: #f8fafc;
+  --foreground: #030712;
+  --primary: #4f46e5;
+  --primary-glow: rgba(79, 70, 229, 0.2);
+  --secondary: #9333ea;
+  --secondary-glow: rgba(147, 51, 234, 0.2);
+  --accent: #0891b2;
+  --accent-glow: rgba(8, 145, 178, 0.2);
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --border: rgba(0, 0, 0, 0.1);
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --bg-projects: #f1f5f9;
+  --bg-skills: #eff6ff;
+  --bg-about: #f8fafc;
+}
+
+/* Animated Gradient Keyframes */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+  /* Offset for fixed header when using hash navigation */
+  scroll-padding-top: 120px;
+  /* Font is now loaded via next/font/google in layout.tsx */
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  /* Use Inter font */
+  font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+}
+
+/* Noise Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+}
+
+/* Custom Selection */
+::selection {
+  background: var(--accent);
+  color: #000;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  font-size: 1.125rem;
+}
+
+.btn-primary {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px var(--primary-glow);
+}
+
+.btn-gradient {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background-size: 200% 200%;
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  animation: gradientShift 3s ease infinite;
+}
+
+.btn-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-gradient:hover::before {
+  opacity: 1;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px var(--primary-glow), 0 0 40px var(--accent-glow);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  border-color: var(--foreground);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Glass Card Utility */
+.glass-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+}
+
+/* Helper Utilities */
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+/* Premium Section Backgrounds */
+.section-projects {
+  background-color: var(--bg-projects);
+  position: relative;
+}
+
+.section-skills {
+  background-color: var(--bg-skills);
+  position: relative;
+}
+
+.section-about {
+  background-color: var(--bg-about);
+  position: relative;
+}
+
+/* Mesh Gradient Underlay */
+.mesh-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.4;
+  pointer-events: none;
+  background-image:
+    radial-gradient(at 10% 10%, var(--primary-glow) 0, transparent 40%),
+    radial-gradient(at 90% 10%, var(--secondary-glow) 0, transparent 40%),
+    radial-gradient(at 50% 50%, var(--accent-glow) 0, transparent 50%),
+    radial-gradient(at 10% 90%, var(--primary-glow) 0, transparent 40%),
+    radial-gradient(at 90% 90%, var(--secondary-glow) 0, transparent 40%);
+  filter: blur(80px);
+}
+
+.btn-cyan {
+  background: var(--accent);
+  color: #000;
+}
+
+.btn-cyan:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px var(--accent-glow);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--foreground);
+  color: var(--foreground);
+  backdrop-filter: blur(10px);
+}
+
+.btn-outline:hover {
+  background: var(--foreground);
+  color: var(--background);
+  transform: translateY(-2px);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-warning {
+  color: var(--warning);
+}

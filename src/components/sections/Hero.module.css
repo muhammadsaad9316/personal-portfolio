@@ -1,0 +1,312 @@
+.hero {
+    padding: 4rem 0 8rem;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 20%, var(--primary-glow) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, var(--accent-glow) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, var(--secondary-glow) 0%, transparent 50%);
+    position: relative;
+    overflow: hidden;
+}
+
+.heroGlow {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    /* GPU acceleration for parallax scroll */
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Animated Orbs */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 1;
+    /* GPU acceleration hint */
+    will-change: transform;
+    transform: translateZ(0);
+    /* Force GPU layer */
+}
+
+/* Floating Particles */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--foreground);
+    border-radius: 50%;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 1;
+    /* GPU acceleration for smooth animation */
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+
+@keyframes particleFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(20px, -30px);
+    }
+}
+
+/* Scanner Line */
+.scanner {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: scannerSweep 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes scannerSweep {
+
+    0%,
+    100% {
+        left: -100%;
+        opacity: 0;
+    }
+
+    10%,
+    90% {
+        opacity: 1;
+    }
+
+    50% {
+        left: 100%;
+    }
+}
+
+.content {
+    max-width: 900px;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1.25rem;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 999px;
+    color: var(--success);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    font-family: var(--font-mono);
+    margin: 0;
+    width: fit-content;
+    position: relative;
+}
+
+.status::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 999px;
+    background: rgba(16, 185, 129, 0.1);
+    animation: statusRipple 2s ease-out infinite;
+    z-index: -1;
+}
+
+@keyframes statusRipple {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+}
+
+.statusDot {
+    width: 10px;
+    height: 10px;
+    background: var(--success);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--success-glow);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+    }
+}
+
+.title {
+    font-size: 5.5rem;
+    line-height: 1.1;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.03em;
+    color: #f8fafc;
+}
+
+@keyframes titleGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    }
+
+    50% {
+        text-shadow: 0 0 50px rgba(99, 102, 241, 0.8), 0 0 20px rgba(168, 85, 247, 0.6);
+    }
+}
+
+.highlight {
+    display: block;
+    margin-top: 0;
+    /* Font sharpness optimizations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Wrapper for hidden placeholder technique */
+.textWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+
+/* Hidden placeholder reserves space for longest text */
+.textPlaceholder {
+    visibility: hidden;
+    white-space: nowrap;
+    font-size: 4rem;
+    line-height: 1.2;
+    pointer-events: none;
+    /* Apply gradient properties for consistent sizing */
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* Dynamic text positioned absolutely on top */
+.rotatingText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    font-size: 4rem;
+    line-height: 1.2;
+    display: block !important;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--muted-foreground);
+    margin: 0;
+    max-width: 700px;
+    line-height: 1.5;
+}
+
+.actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 3.5rem;
+    }
+
+    .hero {
+        padding: 8rem 0;
+    }
+
+    .textPlaceholder {
+        font-size: 2.5rem;
+    }
+
+    .rotatingText {
+        font-size: 2.5rem;
+    }
+
+    .orb {
+        display: none;
+    }
+
+    .particle {
+        display: none;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .orb,
+    .particle,
+    .scanner {
+        display: none;
+    }
+
+    .title {
+        animation: none;
+    }
+
+    .statusRipple {
+        animation: none;
+    }
+
+    /* Disable will-change for reduced motion */
+    .orb,
+    .particle,
+    .heroGlow,
+    .card,
+    .projectImage {
+        will-change: auto;
+        animation: none;
+    }
+
+    /* Instant transitions instead of animations */
+    .card,
+    .projectImage {
+        transition: none;
+    }
+}
