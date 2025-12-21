@@ -9,6 +9,9 @@
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
+    /* Counter body zoom: 0.75 to restore original size */
+    zoom: 1.333;
+    /* 1 ÷ 0.75 = 1.333 (back to 100%) */
 }
 
 .logo {
