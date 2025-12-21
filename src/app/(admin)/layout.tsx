@@ -6,7 +6,7 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc' }}>
+        <div style={{ display: 'flex', minHeight: '133.33vh', background: '#f8fafc' }}>
             <AdminNav />
             <main style={{ flex: 1, marginLeft: '250px' }}>
                 {children}
