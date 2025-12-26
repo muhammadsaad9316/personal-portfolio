@@ -132,7 +132,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                             className={styles.progressCard}
                         >
                             <div className={styles.progressHeader}>
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-4">
                                     <GraduationCap size={18} className="text-primary" />
                                     <span className={styles.progressLabel}>Degree Progress</span>
                                 </div>
@@ -182,15 +182,15 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                             </div>
                         </motion.div>
 
-                        <div className="flex flex-wrap items-center gap-6 mt-12">
-                            <RippleButton href="/resume.pdf" className="btn btn-gradient btn-sm">
+                        <div className="flex flex-wrap items-center gap-8 mt-48">
+                            <RippleButton href="/resume.pdf" className={`btn btn-gradient ${styles.downloadButton}`}>
                                 <Download size={16} />
                                 Download Full CV
                             </RippleButton>
 
                             <div className={styles.learningBadge}>
                                 <span className={styles.learningDot} />
-                                <span className="text-xs font-mono">Learning: Next.js 14 Architecture</span>
+                                <span className="font-mono">Learning: Next.js 14 Architecture</span>
                             </div>
                         </div>
                     </div>
