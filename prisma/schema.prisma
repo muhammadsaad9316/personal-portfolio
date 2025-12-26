@@ -9,21 +9,21 @@ datasource db {
 }
 
 model Admin {
-  id       String @id @default(uuid())
-  email    String @unique
+  id       String  @id @default(uuid())
+  email    String  @unique
   password String
   name     String?
 }
 
 model PageContent {
   id        String   @id @default(uuid())
-  pageSlug  String   // e.g., "home", "about", "contact"
-  section   String   // e.g., "hero", "skills", "about-story"
-  content   String   // JSON string storing the content for flexibility
+  pageSlug  String
+  section   String
+  content   String
   isVisible Boolean  @default(true)
   order     Int      @default(0)
   updatedAt DateTime @updatedAt
-  
+
   @@unique([pageSlug, section])
 }
 
@@ -32,14 +32,14 @@ model Project {
   title        String
   slug         String   @unique
   description  String
-  content      String   // Full details (Markdown or HTML)
+  content      String
   imageUrl     String?
   demoUrl      String?
   repoUrl      String?
-  tags         String   // Comma separated tags
-  status       String   @default("Completed") // "Live", "In Development", "Completed"
-  technologies String?  // Comma separated icon names (e.g., "react,nextjs,tailwind")
-  caseStudy    String?  // JSON string: { problem, solution, impact }
+  tags         String
+  status       String   @default("Completed")
+  technologies String?
+  caseStudy    String?
   featured     Boolean  @default(false)
   order        Int      @default(0)
   createdAt    DateTime @default(now())
@@ -47,39 +47,39 @@ model Project {
 }
 
 model Skill {
-  id              String   @id @default(uuid())
-  name            String   @unique
-  category        String   // "Frontend", "Backend", "Tools", "Soft Skills"
-  icon            String?  // Icon name or URL
-  proficiency     Int?     // 1-100
-  yearsOfExperience Float  @default(0) // Changed to Float
-  projectCount    Int      @default(0)
-  order           Int      @default(0)
+  id                String  @id @default(uuid())
+  name              String  @unique
+  category          String
+  icon              String?
+  proficiency       Int?
+  yearsOfExperience Float   @default(0)
+  projectCount      Int     @default(0)
+  order             Int     @default(0)
 }
 
 model BlogPost {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
-  slug        String   @unique
+  slug        String    @unique
   excerpt     String?
   content     String
   coverImage  String?
-  published   Boolean  @default(false)
+  published   Boolean   @default(false)
   publishedAt DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   tags        String?
 }
 
 model Testimonial {
-  id          String   @id @default(uuid())
-  name        String
-  role        String?
-  company     String?
-  content     String
-  avatarUrl   String?
-  featured    Boolean  @default(false)
-  order       Int      @default(0)
+  id        String  @id @default(uuid())
+  name      String
+  role      String?
+  company   String?
+  content   String
+  avatarUrl String?
+  featured  Boolean @default(false)
+  order     Int     @default(0)
 }
 
 model Message {
