@@ -182,7 +182,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                             </div>
                         </motion.div>
 
-                        <div className="flex flex-wrap items-center gap-8 mt-48">
+                        <div className={`flex flex-wrap items-center gap-4 md:gap-8 ${styles.actionButtons}`}>
                             <RippleButton href="/resume.pdf" className={`btn btn-gradient ${styles.downloadButton}`}>
                                 <Download size={16} />
                                 Download Full CV
