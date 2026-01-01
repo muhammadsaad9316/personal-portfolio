@@ -123,7 +123,7 @@ export default function PasswordTool() {
   };
 
   return (
-    <div className={styles.section}>
+    <section id="password-tool" className={styles.section}>
 
       {/* Background Blobs */}
       <div className={styles.blobBlue}></div>
@@ -349,6 +349,6 @@ export default function PasswordTool() {
         </div>
 
       </div>
-    </div>
+    </section>
   );
 }

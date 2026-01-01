@@ -7,8 +7,8 @@ import { useScrollSpy } from '@/hooks/useScrollSpy';
 
 export default function Header() {
     const activeSection = useScrollSpy({
-        sections: ['about', 'skills', 'projects', 'contact'],
-        offset: 150 // Offset for fixed header
+        sections: ['about', 'skills', 'projects', 'password-tool', 'contact'],
+        offset: 200 // Balanced offset for responsive navigation
     });
 
     return (
@@ -20,7 +20,9 @@ export default function Header() {
                 <nav className={styles.nav}>
                     {['About', 'Skills', 'Projects', 'Contact'].map((item) => {
                         const itemId = item.toLowerCase();
-                        const isActive = activeSection === itemId;
+                        // If we are in 'password-tool', keep 'projects' active
+                        const isActive = activeSection === itemId ||
+                            (itemId === 'projects' && activeSection === 'password-tool');
 
                         return (
                             <Magnetic key={item}>
