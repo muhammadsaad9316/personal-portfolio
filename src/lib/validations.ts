@@ -43,9 +43,9 @@ export const projectSchema = z.object({
     content: z.string()
         .min(1, 'Content is required')
         .trim(),
-    imageUrl: z.string().url().optional().or(z.literal('')),
-    demoUrl: z.string().url().optional().or(z.literal('')),
-    repoUrl: z.string().url().optional().or(z.literal('')),
+    imageUrl: z.string().optional().or(z.literal('')),
+    demoUrl: z.string().optional().or(z.literal('')),
+    repoUrl: z.string().optional().or(z.literal('')),
     tags: z.string()
         .min(1, 'At least one tag is required')
         .trim(),
@@ -53,6 +53,7 @@ export const projectSchema = z.object({
         .default('Completed'),
     technologies: z.string().optional(),
     caseStudy: z.string().optional(),
+    category: z.string().trim().default('Featured Work'),
     featured: z.boolean().default(false),
 });
 
@@ -80,29 +81,6 @@ export const skillSchema = z.object({
 });
 
 export type SkillInput = z.infer<typeof skillSchema>;
-
-/**
- * Blog Post Validation Schema
- */
-export const blogPostSchema = z.object({
-    title: z.string()
-        .min(1, 'Title is required')
-        .max(200, 'Title must be less than 200 characters')
-        .trim(),
-    excerpt: z.string()
-        .max(300, 'Excerpt must be less than 300 characters')
-        .trim()
-        .optional(),
-    content: z.string()
-        .min(1, 'Content is required')
-        .trim(),
-    coverImage: z.string().url().optional().or(z.literal('')),
-    tags: z.string().optional(),
-    published: z.boolean().default(false),
-});
-
-export type BlogPostInput = z.infer<typeof blogPostSchema>;
-
 /**
  * Page Content Validation Schema
  */

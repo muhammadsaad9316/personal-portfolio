@@ -16,6 +16,7 @@ export interface SerializableProject {
     status: string;
     technologies: string | null;
     caseStudy: string | null;
+    category: string;
     featured: boolean;
     order: number;
     createdAt: string; // ISO string

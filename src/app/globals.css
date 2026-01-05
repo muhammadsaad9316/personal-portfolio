@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   /* Premium Dark Theme Palette */
   --background: #030712;
@@ -39,6 +41,10 @@
   --radius: 0.5rem;
   --input: #1e293b;
   --ring: #6366f1;
+  /* Folder Colors - Dark Mode */
+  --folder-back: #1e1b4b;
+  --folder-tab: #312e81;
+  --folder-front: #4338ca;
 }
 
 [data-theme='light'] {
@@ -58,6 +64,11 @@
   --bg-projects: #f1f5f9;
   --bg-skills: #eff6ff;
   --bg-about: #f8fafc;
+  
+  /* Folder Colors - Light Mode */
+  --folder-back: #e0e7ff;
+  --folder-tab: #c7d2fe;
+  --folder-front: #a5b4fc;
 }
 
 /* Animated Gradient Keyframes */

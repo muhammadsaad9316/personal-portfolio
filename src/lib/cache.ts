@@ -47,6 +47,9 @@ export const getCachedFeaturedProjects = cache(async () => {
                 caseStudy: true,
                 createdAt: true,
                 updatedAt: true,
+                category: true,
+                featured: true,
+                order: true,
             },
         });
     } catch (error) {

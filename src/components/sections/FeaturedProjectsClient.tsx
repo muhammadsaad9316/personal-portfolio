@@ -1,140 +1,74 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
+import { useMemo } from 'react';
 import styles from './Projects.module.css';
-import { ExternalLink, Github, ChevronRight, Globe, Code, Shield, CheckCircle2, FlaskConical, Rocket } from 'lucide-react';
-import { Magnetic } from '@/components/ui/Magnetic';
+import { AnimatedFolder, Project } from '@/components/ui/3d-folder';
 import type { SerializableProject } from '@/types/project';
 
-const statusIcons: Record<string, any> = {
-    'Live': Rocket,
-    'In Development': FlaskConical,
-    'Completed': CheckCircle2
-};
-
 export default function FeaturedProjectsClient({ projects }: { projects: SerializableProject[] }) {
-    const [isGrayscale, setIsGrayscale] = useState(true);
-    const [selectedProject, setSelectedProject] = useState<string | null>(null);
+
+    // Group projects by status or category if available, otherwise "Featured Work"
+    const folders = useMemo(() => {
+        // Group projects by their database field 'category'
+        const groups: Record<string, SerializableProject[]> = {};
+
+        projects.forEach(project => {
+            const cat = project.category || 'Featured Work';
+            if (!groups[cat]) {
+                groups[cat] = [];
+            }
+            groups[cat].push(project);
+        });
+
+        // Convert to array and assign gradients
+        const gradients = [
+            "linear-gradient(135deg, #4f46e5, #818cf8)", // Indigo
+            "linear-gradient(135deg, #e11d48, #fb7185)", // Rose
+            "linear-gradient(135deg, #0891b2, #22d3ee)", // Cyan
+            "linear-gradient(135deg, #10b981, #34d399)", // Emerald
+            "linear-gradient(135deg, #f59e0b, #fbbf24)", // Amber
+            "linear-gradient(135deg, #8b5cf6, #a78bfa)", // Violet
+        ];
+
+        return Object.entries(groups).map(([title, groupProjects], index) => ({
+            title,
+            projects: groupProjects,
+            gradient: gradients[index % gradients.length]
+        }));
+    }, [projects]);
+
+    // Map SerializableProject to the internal Project type for 3d-folder
+    function mapProjects(serializableProjects: SerializableProject[]): Project[] {
+        return serializableProjects.map(p => ({
+            id: p.id,
+            image: p.imageUrl || '',
+            title: p.title,
+            tags: p.tags,
+            demoUrl: p.demoUrl
+        }));
+    }
 
     return (
-        <section id="projects" className={`${styles.section} section-projects`}>
+        <section id="projects" className={`${styles.section} section-projects min-h-screen flex flex-col justify-center`}>
             <div className="mesh-gradient" />
-            <div className="container">
-                <div className={styles.header}>
-                    <h2 className={styles.sectionTitle}>Featured Projects</h2>
-                    <div className={styles.controls}>
-                        <button
-                            onClick={() => setIsGrayscale(!isGrayscale)}
-                            className={`${styles.toggleBtn} ${!isGrayscale ? styles.toggleActive : ''}`}
-                        >
-                            <span>{isGrayscale ? 'Grayscale' : 'Full Color'}</span>
-                        </button>
-                    </div>
+            <div className="container relative z-10">
+                <div className="text-center mb-16">
+                    <h2 className={styles.sectionTitle}>Featured Work</h2>
+                    <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+                        An interactive collection of my latest deployments and experiments.
+                        <br /><span className="text-sm opacity-70">(Hover over the folders to explore)</span>
+                    </p>
                 </div>
 
-                <div className={styles.grid}>
-                    {projects.map((project) => {
-                        const caseStudy = project.caseStudy ? JSON.parse(project.caseStudy) : null;
-                        const techIcons = project.technologies?.split(',') || [];
-                        const StatusIcon = statusIcons[project.status] || CheckCircle2;
-
-                        return (
-                            <Magnetic key={project.id}>
-                                <div
-                                    className={`${styles.card} ${selectedProject === project.id ? styles.cardExpanded : ''}`}
-                                    onClick={() => setSelectedProject(selectedProject === project.id ? null : project.id)}
-                                >
-                                    <div className={styles.imageContainer}>
-                                        <div className={`${styles.statusBadge} ${styles['status' + (project.status || 'Completed').replace(/ /g, '')]}`}>
-                                            <StatusIcon size={12} />
-                                            <span>{project.status || 'Completed'}</span>
-                                        </div>
-
-                                        <div className={styles.techOverlay}>
-                                            {techIcons.map((tech, idx) => (
-                                                <div key={idx} className={styles.techIconMini} title={tech}>
-                                                    <Code size={12} />
-                                                </div>
-                                            ))}
-                                        </div>
-
-                                        <Image
-                                            src={project.imageUrl || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop'}
-                                            alt={`Screenshot of ${project.title} project`}
-                                            width={800}
-                                            height={450}
-                                            className={styles.projectImage}
-                                            style={{ filter: isGrayscale ? 'grayscale(1)' : 'grayscale(0)' }}
-                                            priority={false}
-                                        />
-                                    </div>
-
-                                    <div className={styles.cardContent}>
-                                        <div className="flex justify-between items-start mb-4">
-                                            <h3 className={styles.cardTitle}>{project.title}</h3>
-                                            <ChevronRight
-                                                className={`${styles.expandIcon} ${selectedProject === project.id ? styles.expanded : ''}`}
-                                                size={20}
-                                            />
-                                        </div>
-
-                                        <p className={styles.cardDesc}>{project.description}</p>
-
-                                        <div className={styles.tags}>
-                                            {(project.tags || '').split(',').map(tag => (
-                                                <span key={tag} className={styles.tag}>{tag.trim()}</span>
-                                            ))}
-                                        </div>
-
-                                        <AnimatePresence>
-                                            {selectedProject === project.id && caseStudy && (
-                                                <motion.div
-                                                    initial={{ height: 0, opacity: 0 }}
-                                                    animate={{ height: 'auto', opacity: 1 }}
-                                                    exit={{ height: 0, opacity: 0 }}
-                                                    className={styles.caseStudy}
-                                                >
-                                                    <div className={styles.processItem}>
-                                                        <span className={styles.processLabel}>Problem</span>
-                                                        <p className={styles.processText}>{caseStudy.problem}</p>
-                                                    </div>
-                                                    <div className={styles.processItem}>
-                                                        <span className={styles.processLabel}>Solution</span>
-                                                        <p className={styles.processText}>{caseStudy.solution}</p>
-                                                    </div>
-                                                    <div className={styles.processItem}>
-                                                        <span className={styles.processLabel}>Impact</span>
-                                                        <p className={styles.processText}>{caseStudy.impact}</p>
-                                                    </div>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
-
-                                        <div className={styles.links}>
-                                            {project.demoUrl && project.demoUrl !== '#' && (
-                                                <a href={project.demoUrl} target="_blank" className={styles.link} onClick={(e) => e.stopPropagation()}>
-                                                    Live Demo <ExternalLink size={16} />
-                                                </a>
-                                            )}
-                                            {project.repoUrl && project.repoUrl !== '#' && (
-                                                <a href={project.repoUrl} target="_blank" className={styles.link} onClick={(e) => e.stopPropagation()}>
-                                                    GitHub <Github size={16} />
-                                                </a>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </Magnetic>
-                        );
-                    })}
-                </div>
-
-                <div className="flex justify-center mt-12">
-                    <button className="btn btn-outline">
-                        View All Projects <ChevronRight size={18} />
-                    </button>
+                <div className="flex flex-wrap justify-center gap-12 md:gap-20">
+                    {folders.map((folder, idx) => (
+                        <AnimatedFolder
+                            key={folder.title + idx}
+                            title={folder.title}
+                            projects={mapProjects(folder.projects)}
+                            gradient={folder.gradient}
+                        />
+                    ))}
                 </div>
             </div>
         </section>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useFormStatus } from 'react-dom';
-import { useActionState, useEffect, useRef } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import { createProject, updateProject } from '@/app/actions';
 import styles from './AddProjectForm.module.css';
 import { FaPlus, FaCheck, FaExclamationCircle, FaSave, FaTimes } from 'react-icons/fa';
@@ -54,60 +54,25 @@ export default function AddProjectForm({ project, onCancel }: AddProjectFormProp
 
     const [state, formAction] = useActionState(actionToUse as any, initialState);
     const formRef = useRef<HTMLFormElement>(null);
+    const [imageMode, setImageMode] = useState<'url' | 'upload'>('upload');
 
     // Reset form when internal success state changes (for create)
-    // For edit, we might want to keep it or close it? usually close.
     useEffect(() => {
         if (state?.success) {
             if (!project) {
                 formRef.current?.reset();
+                setImageMode('upload'); // Reset mode
             } else if (onCancel) {
-                // optionally close on success? let's just show success message for now
+                // optionally close...
             }
         }
     }, [state?.success, project, onCancel]);
 
     return (
         <div className={styles.formCard}>
-            <div className={styles.formHeader} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                    <h3 className={styles.formTitle}>{project ? 'Edit Project' : 'Add New Project'}</h3>
-                    <p className={styles.formSubtitle}>
-                        {project ? `Editing: ${project.title}` : 'Showcase your latest work in the portfolio'}
-                    </p>
-                </div>
-                {project && onCancel && (
-                    <button
-                        onClick={onCancel}
-                        style={{
-                            background: '#f1f5f9',
-                            border: 'none',
-                            padding: '0.5rem 1rem',
-                            borderRadius: '8px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.5rem',
-                            color: '#64748b',
-                            fontWeight: 500
-                        }}
-                    >
-                        <FaTimes /> Cancel Edit
-                    </button>
-                )}
-            </div>
+            {/* ... header ... */}
 
-            {state?.success && (
-                <div className={styles.successMessage}>
-                    <FaCheck /> {project ? 'Project updated successfully!' : 'Project created successfully!'}
-                </div>
-            )}
-
-            {state?.error && (
-                <div className={styles.error} style={{ fontSize: '1rem', marginBottom: '1rem', background: '#fef2f2', padding: '1rem', borderRadius: '8px', border: '1px solid #fecaca' }}>
-                    <FaExclamationCircle /> {state.error}
-                </div>
-            )}
+            {/* ... success/error messages ... */}
 
             <form ref={formRef} action={formAction} className={styles.form} key={project ? project.id : 'new'}>
 
@@ -122,6 +87,70 @@ export default function AddProjectForm({ project, onCancel }: AddProjectFormProp
                         className={styles.input}
                     />
                     {state?.errors?.title && <span className={styles.error}>{state.errors.title[0]}</span>}
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label className={styles.label}>Project Cover Image</label>
+                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.5rem' }}>
+                        <button
+                            type="button"
+                            onClick={() => setImageMode('upload')}
+                            style={{
+                                padding: '0.5rem 1rem',
+                                borderRadius: '6px',
+                                border: '1px solid',
+                                borderColor: imageMode === 'upload' ? '#2563eb' : '#e2e8f0',
+                                background: imageMode === 'upload' ? '#eff6ff' : 'transparent',
+                                color: imageMode === 'upload' ? '#2563eb' : '#64748b',
+                                cursor: 'pointer',
+                                fontSize: '0.875rem'
+                            }}
+                        >
+                            Upload File
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setImageMode('url')}
+                            style={{
+                                padding: '0.5rem 1rem',
+                                borderRadius: '6px',
+                                border: '1px solid',
+                                borderColor: imageMode === 'url' ? '#2563eb' : '#e2e8f0',
+                                background: imageMode === 'url' ? '#eff6ff' : 'transparent',
+                                color: imageMode === 'url' ? '#2563eb' : '#64748b',
+                                cursor: 'pointer',
+                                fontSize: '0.875rem'
+                            }}
+                        >
+                            Image URL
+                        </button>
+                    </div>
+
+                    {imageMode === 'upload' ? (
+                        <div>
+                            <input
+                                type="file"
+                                id="imageFile"
+                                name="imageFile"
+                                accept="image/*"
+                                className={styles.input}
+                                style={{ border: '1px dashed #cbd5e1', padding: '1rem' }}
+                            />
+                            <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.25rem' }}>
+                                Recommended size: 1200x630px. Max 4MB.
+                            </p>
+                        </div>
+                    ) : (
+                        <input
+                            id="imageUrl"
+                            name="imageUrl"
+                            defaultValue={project?.imageUrl || ''}
+                            placeholder="https://example.com/image.jpg"
+                            className={styles.input}
+                        />
+                    )}
+                    {/* Hidden input to keep existing URL if not changing */}
+                    {project?.imageUrl && <input type="hidden" name="existingImageUrl" value={project.imageUrl} />}
                 </div>
 
                 <div className={styles.formGroup}>
@@ -152,6 +181,26 @@ export default function AddProjectForm({ project, onCancel }: AddProjectFormProp
                             <option value="Live">Live</option>
                         </select>
                     </div>
+
+                    <div className={styles.formGroup}>
+                        <label htmlFor="category" className={styles.label}>Category</label>
+                        <input
+                            id="category"
+                            name="category"
+                            defaultValue={project?.category || ''}
+                            placeholder="e.g. Web Development, Branding"
+                            list="category-suggestions"
+                            className={styles.input}
+                        />
+                        <datalist id="category-suggestions">
+                            <option value="Web Development" />
+                            <option value="Mobile App" />
+                            <option value="Branding" />
+                            <option value="UI/UX Design" />
+                            <option value="Motion" />
+                        </datalist>
+                    </div>
+
 
                     <div className={styles.formGroup}>
                         <label htmlFor="tags" className={styles.label}>Technolgies (Tags)</label>
