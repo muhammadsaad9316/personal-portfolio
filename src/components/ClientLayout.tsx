@@ -4,10 +4,7 @@ import dynamic from 'next/dynamic';
 
 // Lazy load UI components that aren't critical for initial render
 // These are desktop-only enhancements that can load after the main content
-const CustomCursor = dynamic(() =>
-    import('@/components/ui/CustomCursor').then(mod => ({ default: mod.CustomCursor })),
-    { ssr: false }
-);
+// CustomCursor removed as per user request
 
 const FloatingElements = dynamic(() =>
     import('@/components/ui/FloatingElements').then(mod => ({ default: mod.FloatingElements })),
@@ -23,7 +20,6 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
             <Preloader />
-            <CustomCursor />
             <FloatingElements />
             {children}
         </>
