@@ -142,7 +142,7 @@ export default function HeroClient({ content }: { content: any }) {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.1 + i * 0.1, duration: 0.5 }}
-                                        style={{ display: 'inline-block', marginRight: '0.5rem' }}
+                                        style={{ display: 'inline-block', marginRight: '0.3em' }}
                                     >
                                         {word}
                                     </motion.span>
