@@ -2,7 +2,6 @@ import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Skills from '@/components/sections/Skills';
 import FeaturedProjects from '@/components/sections/FeaturedProjects';
-import PasswordTool from '@/components/sections/PasswordTool';
 import Contact from '@/components/sections/Contact';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 import { getCachedSkills } from '@/lib/cache';
@@ -21,8 +20,6 @@ export default async function Home() {
             <Skills skills={skills} />
             <SectionDivider variant="line" />
             <FeaturedProjects />
-            <SectionDivider variant="dots" />
-            <PasswordTool />
             <SectionDivider variant="line" />
             <Contact />
         </>

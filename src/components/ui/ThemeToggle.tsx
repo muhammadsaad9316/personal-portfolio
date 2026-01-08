@@ -11,7 +11,7 @@ export const ThemeToggle = () => {
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme') as 'dark' | 'light';
-        if (savedTheme) {
+        if (savedTheme && savedTheme !== theme) {
             setTheme(savedTheme);
             document.documentElement.setAttribute('data-theme', savedTheme);
         }

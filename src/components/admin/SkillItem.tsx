@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { deleteSkill, updateSkill } from '@/app/actions';
+import { deleteSkill, updateSkill } from '@/actions/skills';
 import { SKILL_CATEGORIES } from '@/constants/categories';
 import styles from './SkillItem.module.css';
 

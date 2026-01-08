@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteProject } from '@/app/actions';
+import { deleteProject } from '@/actions/projects';
 import styles from './ProjectList.module.css';
 import { FaTrash, FaStar, FaGlobe, FaGithub, FaEdit } from 'react-icons/fa';
 
@@ -42,8 +42,8 @@ export default function ProjectList({ projects, onEdit }: ProjectListProps) {
                         <div className={styles.header}>
                             <h4 className={styles.title}>{project.title}</h4>
                             <span className={`${styles.badge} ${project.status === 'Live' ? styles.badgeLive :
-                                    project.status === 'In Development' ? styles.badgeDev :
-                                        styles.badgeCompleted
+                                project.status === 'In Development' ? styles.badgeDev :
+                                    styles.badgeCompleted
                                 }`}>
                                 {project.status}
                             </span>

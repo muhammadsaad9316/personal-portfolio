@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { updateSectionContent } from '@/app/actions';
+import { updateSectionContent } from '@/actions/content';
 import styles from './ContentEditor.module.css';
 import { FaSave, FaCheck, FaExclamationCircle, FaPlus, FaTrash } from 'react-icons/fa';
 

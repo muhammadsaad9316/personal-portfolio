@@ -2,7 +2,7 @@
 
 import { useFormStatus } from 'react-dom';
 import { useActionState, useEffect, useRef, useState } from 'react';
-import { createProject, updateProject } from '@/app/actions';
+import { createProject, updateProject } from '@/actions/projects';
 import styles from './AddProjectForm.module.css';
 import { FaPlus, FaCheck, FaExclamationCircle, FaSave, FaTimes } from 'react-icons/fa';
 

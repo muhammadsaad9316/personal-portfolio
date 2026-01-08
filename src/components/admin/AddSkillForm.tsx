@@ -2,7 +2,7 @@
 
 import { useFormStatus } from 'react-dom';
 import { useActionState, useEffect, useRef } from 'react';
-import { createSkill } from '@/app/actions';
+import { createSkill } from '@/actions/skills';
 import { SKILL_CATEGORIES } from '@/constants/categories';
 import styles from './AddSkillForm.module.css';
 
