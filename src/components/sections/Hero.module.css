@@ -1,5 +1,5 @@
 .hero {
-    padding: 10rem 0 8rem;
+    padding: 7.5rem 0 6rem;
     display: flex;
     align-items: center;
     min-height: 100vh;
@@ -16,10 +16,10 @@
     top: -50%;
     left: 50%;
     transform: translateX(-50%);
-    width: 800px;
-    height: 800px;
+    width: 600px;
+    height: 600px;
     background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
-    filter: blur(80px);
+    filter: blur(60px);
     pointer-events: none;
     z-index: 0;
     /* GPU acceleration for parallax scroll */
@@ -31,7 +31,7 @@
 .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(60px);
+    filter: blur(45px);
     opacity: 0.3;
     pointer-events: none;
     z-index: 1;
@@ -44,8 +44,8 @@
 /* Floating Particles */
 .particle {
     position: absolute;
-    width: 4px;
-    height: 4px;
+    width: 3px;
+    height: 3px;
     background: var(--foreground);
     border-radius: 50%;
     opacity: 0.2;
@@ -74,7 +74,7 @@
     top: 0;
     left: -100%;
     width: 100%;
-    height: 2px;
+    height: 1.5px;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
     animation: scannerSweep 8s ease-in-out infinite;
     pointer-events: none;
@@ -100,25 +100,25 @@
 }
 
 .content {
-    max-width: 900px;
+    max-width: 675px;
     position: relative;
     z-index: 10;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 1.125rem;
 }
 
 .status {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.625rem 1.25rem;
+    gap: 0.5625rem;
+    padding: 0.4688rem 0.9375rem;
     background: rgba(16, 185, 129, 0.15);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-radius: 999px;
+    border: 0.75px solid rgba(16, 185, 129, 0.3);
+    border-radius: 749.25px;
     color: var(--success);
-    font-size: 0.9375rem;
+    font-size: 0.7031rem;
     font-weight: 500;
     font-family: var(--font-mono);
     margin: 0;
@@ -129,8 +129,8 @@
 .status::before {
     content: '';
     position: absolute;
-    inset: -2px;
-    border-radius: 999px;
+    inset: -1.5px;
+    border-radius: 749.25px;
     background: rgba(16, 185, 129, 0.1);
     animation: statusRipple 2s ease-out infinite;
     z-index: -1;
@@ -149,11 +149,11 @@
 }
 
 .statusDot {
-    width: 10px;
-    height: 10px;
+    width: 7.5px;
+    height: 7.5px;
     background: var(--success);
     border-radius: 50%;
-    box-shadow: 0 0 15px var(--success-glow);
+    box-shadow: 0 0 11.25px var(--success-glow);
     animation: pulse 2s infinite;
 }
 
@@ -172,11 +172,11 @@
 }
 
 .title {
-    font-size: 5.5rem;
+    font-size: 4.125rem;
     line-height: 1.1;
     font-weight: 800;
     margin: 0;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.0225em;
     color: #f8fafc;
 }
 
@@ -184,11 +184,11 @@
 
     0%,
     100% {
-        text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+        text-shadow: 0 0 22.5px rgba(99, 102, 241, 0.5);
     }
 
     50% {
-        text-shadow: 0 0 50px rgba(99, 102, 241, 0.8), 0 0 20px rgba(168, 85, 247, 0.6);
+        text-shadow: 0 0 37.5px rgba(99, 102, 241, 0.8), 0 0 15px rgba(168, 85, 247, 0.6);
     }
 }
 
@@ -212,7 +212,7 @@
 .textPlaceholder {
     visibility: hidden;
     white-space: nowrap;
-    font-size: 4rem;
+    font-size: 3rem;
     line-height: 1.2;
     pointer-events: none;
     /* Apply gradient properties for consistent sizing */
@@ -227,41 +227,41 @@
     top: 0;
     left: 0;
     white-space: nowrap;
-    font-size: 4rem;
+    font-size: 3rem;
     line-height: 1.2;
     display: block !important;
 }
 
 .subtitle {
-    font-size: 1.25rem;
+    font-size: 0.9375rem;
     color: var(--muted-foreground);
     margin: 0;
-    max-width: 700px;
+    max-width: 525px;
     line-height: 1.5;
 }
 
 .actions {
     display: flex;
-    gap: 1.5rem;
-    margin-top: 0.5rem;
+    gap: 1.125rem;
+    margin-top: 0.375rem;
     flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
     .title {
-        font-size: 3.5rem;
+        font-size: 2.625rem;
     }
 
     .hero {
-        padding: 8rem 0;
+        padding: 6rem 0;
     }
 
     .textPlaceholder {
-        font-size: 2.5rem;
+        font-size: 1.875rem;
     }
 
     .rotatingText {
-        font-size: 2.5rem;
+        font-size: 1.875rem;
     }
 
     .orb {
@@ -274,7 +274,7 @@
 
     .actions {
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.75rem;
     }
 }
 

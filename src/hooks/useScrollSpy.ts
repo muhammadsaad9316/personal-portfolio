@@ -1,61 +1,82 @@
-'use client';
+import { useState, useEffect } from 'react';
 
-import { useEffect, useState } from 'react';
-
-interface ScrollSpyProps {
+interface UseScrollSpyOptions {
     sections: string[];
     offset?: number;
 }
 
-export function useScrollSpy({ sections, offset = 100 }: ScrollSpyProps) {
+export function useScrollSpy({ sections, offset = 0 }: UseScrollSpyOptions): string {
     const [activeSection, setActiveSection] = useState<string>('');
 
     useEffect(() => {
         const handleScroll = () => {
-            // Detect when section enters just below the fixed header
-            // Header is ~100px tall, so trigger slightly below it
-            const triggerPoint = window.scrollY + 150;
+            // Find the first section that is active (top of section is above the offset line)
+            // We iterate in reverse to find the last one that matches the criteria
+            // OR we can iterate forwards and find the last one whose top is <= scroll + offset
 
-            let foundSection = '';
+            const scrollPosition = window.scrollY + offset;
 
-            // Check sections in reverse order to find current section
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const section = document.getElementById(sections[i]);
-                if (section) {
-                    const sectionTop = section.offsetTop;
-                    const sectionBottom = sectionTop + section.offsetHeight;
+            let currentSection = '';
 
-                    // If trigger point is within this section's boundaries
-                    if (triggerPoint >= sectionTop && triggerPoint < sectionBottom) {
-                        // Highlight the NEXT section instead of current one
-                        const nextIndex = i + 1;
-                        if (nextIndex < sections.length) {
-                            foundSection = sections[nextIndex];
-                        } else {
-                            // If we're at the last section, keep it highlighted
-                            foundSection = sections[i];
-                        }
-                        break;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const { offsetTop, offsetHeight } = element;
+                    // Check if the scroll position is within the section
+                    if (
+                        scrollPosition >= offsetTop &&
+                        scrollPosition < offsetTop + offsetHeight
+                    ) {
+                        currentSection = sectionId;
                     }
                 }
             }
 
-            // Only update if the active section changed
-            if (foundSection !== activeSection) {
-                setActiveSection(foundSection);
+            // Fallback: if we are at the very top, maybe none match if the first section has margin
+            // But typically checking if scrollPosition >= offsetTop is enough.
+            // Let's refine the logic to be "closest section to the top" or similar.
+
+            // Better approach often used:
+            // Find the section whose top is closest to the viewport top (plus offset)
+            // but still "past" the viewport top.
+
+            // Let's stick to the range check above. It's solid if sections are contiguous.
+            // If we didn't find one in the exact range (e.g. gaps), we might want to keep the previous one
+            // or find the nearest one.
+
+            // Actually, a simpler standard approach:
+            // Active is the last section whose offsetTop is <= scrollPosition
+
+            let maxSectionId = '';
+            let maxSectionTop = -Infinity;
+
+            sections.forEach((sectionId) => {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const top = element.offsetTop;
+                    if (scrollPosition >= top) {
+                        if (top > maxSectionTop) {
+                            maxSectionTop = top;
+                            maxSectionId = sectionId;
+                        }
+                    }
+                }
+            });
+
+            if (maxSectionId) {
+                setActiveSection(maxSectionId);
+            } else if (sections.length > 0 && window.scrollY < (document.getElementById(sections[0])?.offsetTop || 0)) {
+                // Before the first section
+                setActiveSection('');
             }
         };
 
         // Initial check
         handleScroll();
 
-        // Add scroll listener
         window.addEventListener('scroll', handleScroll, { passive: true });
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [sections, offset, activeSection]);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [sections, offset]);
 
     return activeSection;
 }

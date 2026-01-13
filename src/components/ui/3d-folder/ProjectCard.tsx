@@ -9,25 +9,25 @@ export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
         const factor = middleIndex > 0 ? (index - middleIndex) / middleIndex : 0;
 
         const rotation = factor * 20;
-        const translationX = factor * 70;
-        const translationY = Math.abs(factor) * 10;
+        const translationX = factor * 52.5;
+        const translationY = Math.abs(factor) * 7.5;
 
         return (
             <div
                 ref={ref}
                 className={cn(
-                    "absolute w-24 h-32 cursor-pointer group/card",
+                    "absolute w-[72px] h-24 cursor-pointer group/card",
                     isSelected && "opacity-0",
                 )}
                 style={{
                     transform: isVisible
-                        ? `translateY(calc(-110px + ${translationY}px)) translateX(${translationX}px) rotate(${rotation}deg) scale(1)`
+                        ? `translateY(calc(-82.5px + ${translationY}px)) translateX(${translationX}px) rotate(${rotation}deg) scale(1)`
                         : "translateY(0px) translateX(0px) rotate(0deg) scale(0.4)",
                     opacity: isSelected ? 0 : isVisible ? 1 : 0,
                     transition: `all ${ANIMATION_TIMING.card} ${delay}ms`,
                     zIndex: 10 + index,
-                    left: "calc(50% - 48px)",
-                    top: "calc(50% - 64px)",
+                    left: "calc(50% - 36px)",
+                    top: "calc(50% - 48px)",
                 }}
                 onClick={(e) => {
                     e.stopPropagation();

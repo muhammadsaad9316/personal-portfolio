@@ -33,7 +33,7 @@ export const AnimatedFolder: React.FC<AnimatedFolderProps> = ({ title, projects,
         <>
             <div
                 className={cn("relative flex flex-col items-center justify-center p-8 rounded-3xl cursor-pointer bg-transparent transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 group perspective-1000", className)}
-                style={{ minWidth: "280px", minHeight: "340px", perspective: "1200px" }}
+                style={{ minWidth: "210px", minHeight: "255px", perspective: "900px" }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={onClick}
@@ -44,12 +44,12 @@ export const AnimatedFolder: React.FC<AnimatedFolderProps> = ({ title, projects,
                     style={{ width: '100%', height: '100%', background: gradient ? `radial-gradient(circle at 50% 50%, ${gradient.match(/#[a-fA-F0-9]{3,6}/)?.[0] || 'var(--primary)'}20 0%, transparent 60%)` : "radial-gradient(circle at 50% 50%, var(--primary-glow) 0%, transparent 60%)", opacity: isHovered ? 1 : 0 }}
                 />
 
-                <div className="relative flex items-center justify-center mb-6" style={{ height: "180px", width: "220px" }}>
+                <div className="relative flex items-center justify-center mb-6" style={{ height: "135px", width: "165px" }}>
                     {/* Back Folder Sheet */}
-                    <div className="absolute w-40 h-32 rounded-xl shadow-md border border-white/10" style={{ background: backBg, filter: gradient ? "brightness(0.9)" : "none", transformOrigin: "bottom center", transform: isHovered ? "rotateX(-20deg) scaleY(1.05)" : "rotateX(0deg) scaleY(1)", transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)", zIndex: 10 }} />
+                    <div className="absolute w-[120px] h-24 rounded-xl shadow-md border border-white/10" style={{ background: backBg, filter: gradient ? "brightness(0.9)" : "none", transformOrigin: "bottom center", transform: isHovered ? "rotateX(-20deg) scaleY(1.05)" : "rotateX(0deg) scaleY(1)", transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)", zIndex: 10 }} />
 
                     {/* Folder Tab (Top Left) */}
-                    <div className="absolute w-16 h-6 rounded-t-lg border-t border-x border-white/10" style={{ background: tabBg, filter: gradient ? "brightness(0.85)" : "none", top: "calc(50% - 64px - 14px)", left: "calc(50% - 80px + 10px)", transformOrigin: "bottom center", transform: isHovered ? "rotateX(-30deg) translateY(-4px)" : "rotateX(0deg) translateY(0)", transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)", zIndex: 10 }} />
+                    <div className="absolute w-12 h-[18px] rounded-t-lg border-t border-x border-white/10" style={{ background: tabBg, filter: gradient ? "brightness(0.85)" : "none", top: "calc(50% - 48px - 10.5px)", left: "calc(50% - 60px + 7.5px)", transformOrigin: "bottom center", transform: isHovered ? "rotateX(-30deg) translateY(-3px)" : "rotateX(0deg) translateY(0)", transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)", zIndex: 10 }} />
 
                     {/* Items inside folder */}
                     <div className="absolute" style={{ top: "45%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 20 }}>
@@ -70,10 +70,10 @@ export const AnimatedFolder: React.FC<AnimatedFolderProps> = ({ title, projects,
                     </div>
 
                     {/* Front Folder Sheet */}
-                    <div className="absolute w-40 h-32 rounded-xl shadow-lg border border-white/20" style={{ background: frontBg, top: "calc(50% - 64px + 6px)", transformOrigin: "bottom center", transform: isHovered ? "rotateX(35deg) translateY(15px)" : "rotateX(0deg) translateY(0)", transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)", zIndex: 30 }} />
+                    <div className="absolute w-[120px] h-24 rounded-xl shadow-lg border border-white/20" style={{ background: frontBg, top: "calc(50% - 48px + 4.5px)", transformOrigin: "bottom center", transform: isHovered ? "rotateX(35deg) translateY(11.25px)" : "rotateX(0deg) translateY(0)", transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)", zIndex: 30 }} />
 
                     {/* Front Gloss/Reflection */}
-                    <div className="absolute w-40 h-32 rounded-xl overflow-hidden pointer-events-none" style={{ top: "calc(50% - 64px + 6px)", background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%)", transformOrigin: "bottom center", transform: isHovered ? "rotateX(35deg) translateY(15px)" : "rotateX(0deg) translateY(0)", transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)", zIndex: 31 }} />
+                    <div className="absolute w-[120px] h-24 rounded-xl overflow-hidden pointer-events-none" style={{ top: "calc(50% - 48px + 4.5px)", background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%)", transformOrigin: "bottom center", transform: isHovered ? "rotateX(35deg) translateY(11.25px)" : "rotateX(0deg) translateY(0)", transition: "transform 700ms cubic-bezier(0.16, 1, 0.3, 1)", zIndex: 31 }} />
                 </div>
 
                 <div className="text-center relative z-40">

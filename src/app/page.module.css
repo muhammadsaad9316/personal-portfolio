@@ -21,12 +21,12 @@
   display: flex;
   min-height: 100vh;
   width: 100%;
-  max-width: 800px;
+  max-width: 600px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
   background-color: var(--foreground);
-  padding: 120px 60px;
+  padding: 90px 45px;
 }
 
 .intro {
@@ -34,22 +34,22 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  gap: 24px;
+  gap: 18px;
 }
 
 .intro h1 {
-  max-width: 320px;
-  font-size: 40px;
+  max-width: 240px;
+  font-size: 30px;
   font-weight: 600;
   line-height: 48px;
-  letter-spacing: -2.4px;
+  letter-spacing: -1.8px;
   text-wrap: balance;
   color: var(--text-primary);
 }
 
 .intro p {
-  max-width: 440px;
-  font-size: 18px;
+  max-width: 330px;
+  font-size: 13.5px;
   line-height: 32px;
   text-wrap: balance;
   color: var(--text-secondary);
@@ -64,19 +64,19 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+  max-width: 330px;
+  gap: 12px;
+  font-size: 10.5px;
 }
 
 .ctas a {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 96px;
+  border: 0.75px solid transparent;
   transition: 0.2s;
   cursor: pointer;
   width: fit-content;
@@ -86,7 +86,7 @@
 a.primary {
   background: var(--text-primary);
   color: var(--background);
-  gap: 8px;
+  gap: 6px;
 }
 
 a.secondary {
@@ -94,7 +94,7 @@ a.secondary {
 }
 
 /* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
+@media (hover:hover) and (pointer: fine) {
   a.primary:hover {
     background: var(--button-primary-hover);
     border-color: transparent;
@@ -106,19 +106,19 @@ a.secondary {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 450px) {
   .main {
-    padding: 48px 24px;
+    padding: 36px 18px;
   }
 
   .intro {
-    gap: 16px;
+    gap: 12px;
   }
 
   .intro h1 {
-    font-size: 32px;
+    font-size: 24px;
     line-height: 40px;
-    letter-spacing: -1.92px;
+    letter-spacing: -1.44px;
   }
 }
 
