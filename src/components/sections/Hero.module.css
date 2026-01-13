@@ -68,24 +68,27 @@
     }
 }
 
-/* Scanner Line */
+/* Scanner Line - Optimized */
 .scanner {
     position: absolute;
     top: 0;
-    left: -100%;
+    left: 0;
+    /* Fixed position, animate transform */
     width: 100%;
     height: 1.5px;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
     animation: scannerSweep 8s ease-in-out infinite;
     pointer-events: none;
     z-index: 2;
+    will-change: transform;
+    /* Hint for browser */
 }
 
 @keyframes scannerSweep {
 
     0%,
     100% {
-        left: -100%;
+        transform: translateX(-100%);
         opacity: 0;
     }
 
@@ -95,7 +98,7 @@
     }
 
     50% {
-        left: 100%;
+        transform: translateX(100%);
     }
 }
 

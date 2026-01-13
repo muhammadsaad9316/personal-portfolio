@@ -52,6 +52,22 @@ const CURRENT_LEARNING = [
     { name: 'PostgreSQL & Backend Opt', icon: <Database size={14} /> },
 ];
 
+// Optimized Variants for Staggered Animations
+const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1 // Batch animations
+        }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0 }
+};
+
 export default function AboutClient({ content, education }: AboutClientProps) {
     const containerRef = useRef(null);
     const timelineRef = useRef(null);
@@ -91,30 +107,37 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                             {content.title}
                         </motion.h2>
 
-                        <div className={styles.bioContainer}>
+                        {/* Staggered Bio Paragraphs */}
+                        <motion.div
+                            className={styles.bioContainer}
+                            variants={containerVariants}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, margin: "-50px" }}
+                        >
                             {bioParagraphs.map((para, i) => (
                                 <motion.p
                                     key={i}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.1 }}
+                                    variants={itemVariants}
                                     className={styles.text}
                                 >
                                     {para}
                                 </motion.p>
                             ))}
-                        </div>
+                        </motion.div>
 
-                        {/* Stats Grid */}
-                        <div className={styles.statsGrid}>
+                        {/* Staggered Stats Grid */}
+                        <motion.div
+                            className={styles.statsGrid}
+                            variants={containerVariants}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, margin: "-50px" }}
+                        >
                             {STATS.map((stat, i) => (
                                 <motion.div
                                     key={i}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: 0.2 + i * 0.1 }}
+                                    variants={itemVariants}
                                     className={styles.statCard}
                                 >
                                     <div className={styles.statIcon}>{stat.icon}</div>
@@ -122,7 +145,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                                     <div className={styles.statLabel}>{stat.label}</div>
                                 </motion.div>
                             ))}
-                        </div>
+                        </motion.div>
 
                         {/* Progress Card */}
                         <motion.div
@@ -205,56 +228,67 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                                 style={{ height: lineHeight }}
                             />
 
-                            {education.map((item, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.2 }}
-                                    className={`${styles.timelineItem} ${item.type === 'education' ? styles.educationType : styles.experienceType}`}
-                                >
-                                    <div className={styles.timelineMarker}>
-                                        {item.type === 'education' ? <GraduationCap size={14} /> : <Award size={14} />}
-                                    </div>
-
-                                    <div className={styles.timelineContentCard}>
-                                        <div className={styles.timeWrapper}>
-                                            <Calendar size={12} />
-                                            <span className={styles.time}>{item.year}</span>
+                            {/* Staggered Timeline Items */}
+                            <motion.div
+                                variants={containerVariants}
+                                initial="hidden"
+                                whileInView="show"
+                                viewport={{ once: true, margin: "-10%" }}
+                            >
+                                {education.map((item, i) => (
+                                    <motion.div
+                                        key={i}
+                                        variants={{
+                                            hidden: { opacity: 0, x: 20 },
+                                            show: { opacity: 1, x: 0 }
+                                        }}
+                                        className={`${styles.timelineItem} ${item.type === 'education' ? styles.educationType : styles.experienceType}`}
+                                    >
+                                        <div className={styles.timelineMarker}>
+                                            {item.type === 'education' ? <GraduationCap size={14} /> : <Award size={14} />}
                                         </div>
-                                        <h4 className={styles.itemTitle}>{item.title}</h4>
-                                        <p className={styles.provider}>{item.provider}</p>
-                                        <p className={styles.itemDesc}>{item.desc}</p>
 
-                                        {i === 0 && (
-                                            <div className={styles.currentBadge}>
-                                                Ongoing
+                                        <div className={styles.timelineContentCard}>
+                                            <div className={styles.timeWrapper}>
+                                                <Calendar size={12} />
+                                                <span className={styles.time}>{item.year}</span>
                                             </div>
-                                        )}
-                                    </div>
-                                </motion.div>
-                            ))}
+                                            <h4 className={styles.itemTitle}>{item.title}</h4>
+                                            <p className={styles.provider}>{item.provider}</p>
+                                            <p className={styles.itemDesc}>{item.desc}</p>
+
+                                            {i === 0 && (
+                                                <div className={styles.currentBadge}>
+                                                    Ongoing
+                                                </div>
+                                            )}
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
                         </div>
 
-                        {/* Currently Learning Section */}
+                        {/* Currently Learning Section - Staggered */}
                         <div className={styles.learningSection}>
                             <h4 className="text-sm font-mono uppercase tracking-[0.2em] opacity-40 mb-6">Deep Dive Focus</h4>
-                            <div className="flex flex-col gap-3">
+                            <motion.div
+                                className="flex flex-col gap-3"
+                                variants={containerVariants}
+                                initial="hidden"
+                                whileInView="show"
+                                viewport={{ once: true }}
+                            >
                                 {CURRENT_LEARNING.map((tech, i) => (
                                     <motion.div
                                         key={i}
-                                        initial={{ opacity: 0, y: 10 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: 0.5 + i * 0.1 }}
+                                        variants={itemVariants}
                                         className={styles.learningItem}
                                     >
                                         <span className={styles.learningIcon}>{tech.icon}</span>
                                         <span className="text-sm">{tech.name}</span>
                                     </motion.div>
                                 ))}
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
                 </div>
