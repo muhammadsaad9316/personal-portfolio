@@ -113,9 +113,6 @@
     border-radius: 749.25px;
     filter: drop-shadow(0 0 6px var(--primary-glow));
     position: relative;
-    /* GPU acceleration for width animation */
-    will-change: width;
-    transform: translateZ(0);
 }
 
 .milestone {
@@ -182,15 +179,12 @@
     flex-direction: column;
     gap: 0.1875rem;
     transition: all 0.3s ease;
-    /* GPU acceleration */
-    will-change: transform;
-    transform: translateZ(0);
 }
 
 .statCard:hover {
     background: rgba(255, 255, 255, 0.05);
     border-color: var(--primary);
-    transform: translateY(-5px) translateZ(0);
+    transform: translateY(-5px);
 }
 
 .statIcon {

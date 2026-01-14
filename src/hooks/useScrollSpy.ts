@@ -73,9 +73,11 @@ export function useScrollSpy({ sections, offset = 0 }: UseScrollSpyOptions): str
 
         let ticking = false;
 
+        let rafId: number;
+
         const onScroll = () => {
             if (!ticking) {
-                window.requestAnimationFrame(() => {
+                rafId = window.requestAnimationFrame(() => {
                     handleScroll();
                     ticking = false;
                 });
@@ -87,7 +89,10 @@ export function useScrollSpy({ sections, offset = 0 }: UseScrollSpyOptions): str
         handleScroll();
 
         window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            if (rafId) cancelAnimationFrame(rafId);
+        };
     }, [sections, offset]);
 
     return activeSection;

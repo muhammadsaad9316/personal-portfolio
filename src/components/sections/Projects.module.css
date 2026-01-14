@@ -88,8 +88,6 @@
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     height: 100%;
     /* GPU acceleration for hover effects */
-    will-change: transform, box-shadow;
-    transform: translateZ(0);
     backface-visibility: hidden;
 }
 
@@ -178,13 +176,12 @@
     filter: grayscale(1);
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     /* GPU acceleration for scale transform */
-    will-change: transform, filter;
     backface-visibility: hidden;
 }
 
 .card:hover .projectImage {
     filter: grayscale(0);
-    transform: scale(1.1) translateZ(0);
+    transform: scale(1.1);
 }
 
 .cardContent {

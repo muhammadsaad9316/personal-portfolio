@@ -24,20 +24,29 @@ export function useLightboxAnimation({ isOpen, sourceRect, onCloseComplete }: Us
     }, [onCloseComplete]);
 
     useLayoutEffect(() => {
+        let raf1: number;
+        let raf2: number;
+        let timer: NodeJS.Timeout;
+
         if (isOpen && sourceRect) {
             setShouldRender(true);
             setAnimationPhase("initial");
             setIsClosing(false);
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
+            raf1 = requestAnimationFrame(() => {
+                raf2 = requestAnimationFrame(() => {
                     setAnimationPhase("animating");
                 });
             });
-            const timer = setTimeout(() => {
+            timer = setTimeout(() => {
                 setAnimationPhase("complete");
             }, 700);
-            return () => clearTimeout(timer);
         }
+
+        return () => {
+            if (timer) clearTimeout(timer);
+            if (raf1) cancelAnimationFrame(raf1);
+            if (raf2) cancelAnimationFrame(raf2);
+        };
     }, [isOpen, sourceRect]);
 
     return {
