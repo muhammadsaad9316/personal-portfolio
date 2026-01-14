@@ -22,8 +22,7 @@
     filter: blur(60px);
     pointer-events: none;
     z-index: 0;
-    /* GPU acceleration for parallax scroll */
-    will-change: transform;
+    /* will-change: transform; - Let browser handle optimizations */
     backface-visibility: hidden;
 }
 
@@ -35,10 +34,6 @@
     opacity: 0.3;
     pointer-events: none;
     z-index: 1;
-    /* GPU acceleration hint */
-    will-change: transform;
-    transform: translateZ(0);
-    /* Force GPU layer */
 }
 
 /* Floating Particles */
@@ -51,9 +46,6 @@
     opacity: 0.2;
     pointer-events: none;
     z-index: 1;
-    /* GPU acceleration for smooth animation */
-    will-change: transform, opacity;
-    transform: translateZ(0);
 }
 
 @keyframes particleFloat {
@@ -80,8 +72,6 @@
     animation: scannerSweep 8s ease-in-out infinite;
     pointer-events: none;
     z-index: 2;
-    will-change: transform;
-    /* Hint for browser */
 }
 
 @keyframes scannerSweep {

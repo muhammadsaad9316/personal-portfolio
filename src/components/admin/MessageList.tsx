@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { FaRegCopy, FaCheck, FaRegEnvelope, FaCalendarAlt, FaTrash } from 'react-icons/fa';
 import styles from './MessageList.module.css';
+import { deleteMessage } from '@/actions/messages';
 
 interface Message {
     id: string;
@@ -14,11 +15,20 @@ interface Message {
 
 export default function MessageList({ messages }: { messages: Message[] }) {
     const [copiedId, setCopiedId] = useState<string | null>(null);
+    const [isPending, startTransition] = useTransition();
 
     const handleCopyEmail = (email: string, id: string) => {
         navigator.clipboard.writeText(email);
         setCopiedId(id);
         setTimeout(() => setCopiedId(null), 2000);
+    };
+
+    const handleDelete = async (id: string) => {
+        if (confirm('Are you sure you want to delete this message?')) {
+            startTransition(async () => {
+                await deleteMessage(id);
+            });
+        }
     };
 
     if (messages.length === 0) {
@@ -66,6 +76,14 @@ export default function MessageList({ messages }: { messages: Message[] }) {
                             title="Copy Email"
                         >
                             {copiedId === msg.id ? <FaCheck size={14} color="#10b981" /> : <FaRegCopy size={14} />}
+                        </button>
+                        <button
+                            className={styles.actionBtn}
+                            onClick={() => handleDelete(msg.id)}
+                            title="Delete Message"
+                            disabled={isPending}
+                        >
+                            <FaTrash size={14} color={isPending ? "#ccc" : "#ef4444"} />
                         </button>
                     </div>
                 </div>

@@ -3,8 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
-const Shape = ({ delay = 0, size = 100, top = '10%', left = '10%', speed = 0.2, type = 'circle' }) => {
-    const { scrollY } = useScroll();
+const Shape = ({ delay = 0, size = 100, top = '10%', left = '10%', speed = 0.2, type = 'circle', scrollY }: { delay?: number, size?: number, top?: string, left?: string, speed?: number, type?: string, scrollY: any }) => {
     const y = useTransform(scrollY, [0, 5000], [0, size * 5 * speed]);
 
     return (
@@ -36,12 +35,14 @@ const Shape = ({ delay = 0, size = 100, top = '10%', left = '10%', speed = 0.2, 
 };
 
 export const FloatingElements = () => {
+    const { scrollY } = useScroll();
+
     return (
         <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: -2 }}>
-            <Shape size={300} top="15%" left="5%" speed={0.15} />
-            <Shape size={200} top="40%" left="80%" speed={0.25} type="square" delay={2} />
-            <Shape size={400} top="70%" left="10%" speed={0.1} delay={5} />
-            <Shape size={150} top="85%" left="70%" speed={0.3} type="square" delay={1} />
+            <Shape size={300} top="15%" left="5%" speed={0.15} scrollY={scrollY} />
+            <Shape size={200} top="40%" left="80%" speed={0.25} type="square" delay={2} scrollY={scrollY} />
+            <Shape size={400} top="70%" left="10%" speed={0.1} delay={5} scrollY={scrollY} />
+            <Shape size={150} top="85%" left="70%" speed={0.3} type="square" delay={1} scrollY={scrollY} />
             {/* Mesh Blobs */}
             <motion.div
                 animate={{

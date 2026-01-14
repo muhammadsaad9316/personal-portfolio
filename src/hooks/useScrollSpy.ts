@@ -71,11 +71,23 @@ export function useScrollSpy({ sections, offset = 0 }: UseScrollSpyOptions): str
             }
         };
 
+        let ticking = false;
+
+        const onScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
         // Initial check
         handleScroll();
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
     }, [sections, offset]);
 
     return activeSection;
