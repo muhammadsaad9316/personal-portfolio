@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export function useInterval(callback: () => void, delay: number | null) {
+export function useInterval(callback: () => void, delay: number | null, pauseOnHidden = true) {
     const savedCallback = useRef<() => void>(callback);
 
     useEffect(() => {
@@ -9,7 +9,15 @@ export function useInterval(callback: () => void, delay: number | null) {
 
     useEffect(() => {
         if (delay === null) return;
-        const id = setInterval(() => savedCallback.current?.(), delay);
+
+        const tick = () => {
+            if (pauseOnHidden && document.hidden) {
+                return;
+            }
+            savedCallback.current?.();
+        };
+
+        const id = setInterval(tick, delay);
         return () => clearInterval(id);
-    }, [delay]);
+    }, [delay, pauseOnHidden]);
 }

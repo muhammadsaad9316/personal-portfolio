@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import styles from './About.module.css';
 import {
     MapPin,
@@ -53,20 +53,21 @@ const CURRENT_LEARNING = [
 ];
 
 // Optimized Variants for Staggered Animations
-const containerVariants = {
+const getContainerVariants = (isMobile: boolean) => ({
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.1 // Batch animations
+            // Disable stagger on mobile to reduce main thread work
+            staggerChildren: isMobile ? 0 : 0.1
         }
     }
-};
+});
 
-const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
+const getItemVariants = (isMobile: boolean) => ({
+    hidden: { opacity: 0, y: isMobile ? 0 : 10 }, // Reduce transform distance on mobile
     show: { opacity: 1, y: 0 }
-};
+});
 
 export default function AboutClient({ content, education }: AboutClientProps) {
     const containerRef = useRef(null);
@@ -80,6 +81,20 @@ export default function AboutClient({ content, education }: AboutClientProps) {
 
     // Split bio into paragraphs
     const bioParagraphs = content.bio.split('\n').filter(p => p.trim() !== '');
+
+    // Dynamic variants based on device
+    // Check purely on mount to avoid hydration mismatch, or use CSS media query for logic if possible
+    // Here we use a safe default and update
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setIsMobile(window.innerWidth < 768);
+    }, []);
+
+    const variants = useMemo(() => ({
+        container: getContainerVariants(isMobile),
+        item: getItemVariants(isMobile)
+    }), [isMobile]);
 
     return (
         <section id="about" className={styles.section} ref={containerRef}>
@@ -110,7 +125,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                         {/* Staggered Bio Paragraphs */}
                         <motion.div
                             className={styles.bioContainer}
-                            variants={containerVariants}
+                            variants={variants.container}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, margin: "-50px" }}
@@ -118,7 +133,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                             {bioParagraphs.map((para, i) => (
                                 <motion.p
                                     key={i}
-                                    variants={itemVariants}
+                                    variants={variants.item}
                                     className={styles.text}
                                 >
                                     {para}
@@ -129,7 +144,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                         {/* Staggered Stats Grid */}
                         <motion.div
                             className={styles.statsGrid}
-                            variants={containerVariants}
+                            variants={variants.container}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, margin: "-50px" }}
@@ -137,7 +152,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                             {STATS.map((stat, i) => (
                                 <motion.div
                                     key={i}
-                                    variants={itemVariants}
+                                    variants={variants.item}
                                     className={styles.statCard}
                                 >
                                     <div className={styles.statIcon}>{stat.icon}</div>
@@ -230,7 +245,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
 
                             {/* Staggered Timeline Items */}
                             <motion.div
-                                variants={containerVariants}
+                                variants={variants.container}
                                 initial="hidden"
                                 whileInView="show"
                                 viewport={{ once: true, margin: "-10%" }}
@@ -273,7 +288,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                             <h4 className="text-sm font-mono uppercase tracking-[0.2em] opacity-40 mb-6">Deep Dive Focus</h4>
                             <motion.div
                                 className="flex flex-col gap-3"
-                                variants={containerVariants}
+                                variants={variants.container}
                                 initial="hidden"
                                 whileInView="show"
                                 viewport={{ once: true }}
@@ -281,7 +296,7 @@ export default function AboutClient({ content, education }: AboutClientProps) {
                                 {CURRENT_LEARNING.map((tech, i) => (
                                     <motion.div
                                         key={i}
-                                        variants={itemVariants}
+                                        variants={variants.item}
                                         className={styles.learningItem}
                                     >
                                         <span className={styles.learningIcon}>{tech.icon}</span>

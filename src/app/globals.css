@@ -109,6 +109,7 @@ body {
 }
 
 /* Noise Texture Overlay - Optimized */
+/* Noise Texture Overlay - Optimized */
 body::before {
   content: "";
   position: fixed;
@@ -121,8 +122,13 @@ body::before {
   pointer-events: none;
   z-index: 9999;
   opacity: 0.03;
-  /* Slightly reduced opacity */
-  /* Slightly reduced opacity */
+}
+
+@media (max-width: 768px) {
+  body::before {
+    display: none;
+    /* Disable noise on mobile for performance */
+  }
 }
 
 /* Custom Selection */
@@ -302,6 +308,14 @@ a {
     radial-gradient(at 10% 90%, var(--primary-glow) 0, transparent 40%),
     radial-gradient(at 90% 90%, var(--secondary-glow) 0, transparent 40%);
   filter: blur(60px);
+}
+
+@media (max-width: 768px) {
+  .mesh-gradient {
+    filter: blur(30px);
+    /* Reduce blur radius on mobile */
+    opacity: 0.3;
+  }
 }
 
 .btn-cyan {

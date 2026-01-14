@@ -8,6 +8,7 @@ import { ArrowRight, Download, Briefcase } from 'lucide-react';
 import { useScroll, useTransform, motion, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect, useMemo } from 'react';
 import { useInterval } from '@/hooks/useInterval';
+import { shouldAnimate } from '@/lib/animation-budget';
 
 const SUBTITLE_PHRASES = [
     "Computer Science Student",
@@ -34,12 +35,23 @@ export default function HeroClient({ content }: { content: any }) {
     }, 5000); // Changed from 3000ms to 5000ms for more reading time
 
     // Generate orbs data (memoized for stable references)
-    const orbs = useMemo(() => [
-        { size: 400, left: '10%', top: '20%', color: 'var(--primary-glow)', duration: 20 },
-        { size: 350, left: '80%', top: '30%', color: 'var(--secondary-glow)', duration: 25 },
-        { size: 300, left: '60%', top: '60%', color: 'var(--accent-glow)', duration: 22 },
-        { size: 250, left: '30%', top: '70%', color: 'var(--primary-glow)', duration: 18 },
-    ], []);
+    // Generate bubbles/orbs data (memoized for stable references)
+    const orbs = useMemo(() => {
+        const canAnimate = shouldAnimate('standard');
+        if (!canAnimate) return []; // No orbs for strict budgets
+
+        // Full set for high-end, reduced set for others
+        const fullSet = [
+            { size: 400, left: '10%', top: '20%', color: 'var(--primary-glow)', duration: 20 },
+            { size: 350, left: '80%', top: '30%', color: 'var(--secondary-glow)', duration: 25 },
+            { size: 300, left: '60%', top: '60%', color: 'var(--accent-glow)', duration: 22 },
+            { size: 250, left: '30%', top: '70%', color: 'var(--primary-glow)', duration: 18 },
+        ];
+
+        // Return only first 2 for reduced motion/mobile to save GPU
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+        return isMobile ? fullSet.slice(0, 2) : fullSet;
+    }, []);
 
     // Generate particles data on client-side only to avoid hydration mismatch
     const [particles, setParticles] = useState<Array<{
@@ -51,14 +63,19 @@ export default function HeroClient({ content }: { content: any }) {
 
     useEffect(() => {
         // Generate particles only on client side after mount
-        setParticles(
-            Array.from({ length: 15 }, (_, i) => ({
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                delay: i * 0.5,
-                duration: 10 + Math.random() * 10
-            }))
-        );
+        const budget = typeof window !== 'undefined' ? (window.innerWidth < 768 ? 'reduced' : 'full') : 'full';
+        const count = budget === 'full' ? 15 : (budget === 'reduced' ? 5 : 0);
+
+        if (count > 0 && shouldAnimate('decorative')) {
+            setParticles(
+                Array.from({ length: count }, (_, i) => ({
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    delay: i * 0.5,
+                    duration: 10 + Math.random() * 10
+                }))
+            );
+        }
     }, []);
 
     // Smooth scroll to projects

@@ -1,10 +1,13 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
+import { shouldAnimate } from '@/lib/animation-budget';
 
 const Shape = ({ delay = 0, size = 100, top = '10%', left = '10%', speed = 0.2, type = 'circle', scrollY }: { delay?: number, size?: number, top?: string, left?: string, speed?: number, type?: string, scrollY: any }) => {
-    const y = useTransform(scrollY, [0, 5000], [0, size * 5 * speed]);
+
+    // Safety check for scrollY to prevent errors if budget changes mid-session or race conditions
+    const yValue = useTransform(scrollY || 0, [0, 5000], [0, size * 5 * speed]);
 
     return (
         <motion.div
@@ -17,7 +20,7 @@ const Shape = ({ delay = 0, size = 100, top = '10%', left = '10%', speed = 0.2, 
                 borderRadius: type === 'circle' ? '50%' : '12px',
                 border: '1px solid rgba(255, 255, 255, 0.03)',
                 background: 'rgba(255, 255, 255, 0.01)',
-                y,
+                y: yValue,
                 pointerEvents: 'none',
                 zIndex: -1,
                 rotate: delay * 10,
@@ -36,6 +39,20 @@ const Shape = ({ delay = 0, size = 100, top = '10%', left = '10%', speed = 0.2, 
 
 export const FloatingElements = () => {
     const { scrollY } = useScroll();
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        // Check budget on mount
+        const canAnimate = shouldAnimate('decorative');
+        setIsVisible(canAnimate);
+
+        // Cleanup function (optional here since we just stop rendering, but good for future listeners)
+        return () => {
+            setIsVisible(false);
+        };
+    }, []);
+
+    if (!isVisible) return null;
 
     return (
         <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: -2 }}>
