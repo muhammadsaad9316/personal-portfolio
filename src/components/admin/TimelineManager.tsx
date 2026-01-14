@@ -69,7 +69,15 @@ export default function TimelineManager({ initialItems }: { initialItems: Timeli
                     setIsEditing(false);
                 }
             } else {
-                const result = await createTimelineItem({ ...currentItem, order: items.length });
+                const newItem = {
+                    year: currentItem.year || '',
+                    title: currentItem.title || '',
+                    provider: currentItem.provider || '',
+                    desc: currentItem.desc || '',
+                    type: currentItem.type || 'education',
+                    order: items.length
+                };
+                const result = await createTimelineItem(newItem);
                 if (result.success && result.item) {
                     setItems([...items, result.item as TimelineItem]);
                     setIsEditing(false);
