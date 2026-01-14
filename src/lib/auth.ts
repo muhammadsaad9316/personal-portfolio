@@ -13,6 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             credentials: {
                 email: {},
                 password: {},
+                code: {},
             },
             authorize: async (credentials, request) => {
                 const email = credentials?.email as string;
@@ -54,6 +55,36 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                 if (!isPasswordValid) {
                     return null;
+                }
+
+                // 2FA Verification
+                if (user.twoFactorEnabled) {
+                    const code = credentials.code as string;
+
+                    if (!code) {
+                        // If 2FA is enabled but no code provided, fail
+                        // The frontend should have caught this via loginStepOne, 
+                        // but this is a final safety check.
+                        return null;
+                    }
+
+                    if (user.twoFactorToken !== code) {
+                        return null; // Invalid code
+                    }
+
+                    // Check expiry
+                    if (!user.twoFactorExpires || new Date() > user.twoFactorExpires) {
+                        return null; // Expired
+                    }
+
+                    // Clear token after successful use
+                    await prisma.admin.update({
+                        where: { id: user.id },
+                        data: {
+                            twoFactorToken: null,
+                            twoFactorExpires: null,
+                        }
+                    });
                 }
 
                 return {

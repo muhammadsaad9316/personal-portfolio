@@ -20,6 +20,7 @@ export const authConfig = {
     },
     session: {
         strategy: "jwt",
+        maxAge: 2 * 60 * 60, // 2 hours (instead of default 30 days)
     },
     providers: [], // Providers are added in src/lib/auth.ts
 } satisfies NextAuthConfig;

@@ -12,7 +12,10 @@ model Admin {
   id       String  @id @default(uuid())
   email    String  @unique
   password String
-  name     String?
+  name             String?
+  twoFactorToken   String?
+  twoFactorExpires DateTime?
+  twoFactorEnabled Boolean   @default(false)
 }
 
 model PageContent {

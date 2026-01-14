@@ -36,7 +36,8 @@ export async function withRetry<T>(
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       return await operation();
-    } catch (error: any) {
+    } catch (e: unknown) {
+      const error = e as Error & { code?: string };
       lastError = error;
 
       // Check if it's a connection/prepared statement error worth retrying
