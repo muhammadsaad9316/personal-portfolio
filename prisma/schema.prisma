@@ -71,3 +71,15 @@ model Message {
   createdAt DateTime @default(now())
 }
 
+
+model TimelineItem {
+  id        String   @id @default(uuid())
+  year      String
+  title     String
+  provider  String
+  desc      String
+  type      String   @default("education") // education or experience
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

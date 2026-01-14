@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import styles from './AdminNav.module.css';
-import { FaProjectDiagram, FaCode, FaNewspaper, FaCog, FaHome, FaSignOutAlt } from 'react-icons/fa';
+import { FaProjectDiagram, FaCode, FaNewspaper, FaCog, FaHome, FaSignOutAlt, FaHistory } from 'react-icons/fa';
 
 export default function AdminNav() {
     const pathname = usePathname();
@@ -12,6 +12,7 @@ export default function AdminNav() {
     const links = [
         { href: '/admin/dashboard', label: 'Dashboard', icon: <FaHome /> },
         { href: '/admin/messages', label: 'Messages', icon: <FaNewspaper /> },
+        { href: '/admin/timeline', label: 'Journey', icon: <FaHistory /> },
         { href: '/admin/content', label: 'Content', icon: <FaCog /> },
         { href: '/admin/projects', label: 'Projects', icon: <FaProjectDiagram /> },
         { href: '/admin/skills', label: 'Skills', icon: <FaCode /> },
