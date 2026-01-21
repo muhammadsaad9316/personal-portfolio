@@ -26,7 +26,7 @@ export const Preloader = () => {
                         position: 'fixed',
                         inset: 0,
                         zIndex: 99999,
-                        background: '#030712',
+                        background: '#0f172a',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',

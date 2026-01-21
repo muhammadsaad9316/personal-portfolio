@@ -173,7 +173,7 @@ export default function HeroClient({ content }: { content: any }) {
                                     <AnimatePresence mode="wait">
                                         <motion.span
                                             key={currentPhraseIndex}
-                                            className={`${styles.rotatingText} absolute top-0 left-0 bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent leading-tight`}
+                                            className={`${styles.rotatingText} absolute top-0 left-0 bg-gradient-to-r from-[#10b981] to-[#34d399] bg-clip-text text-transparent leading-tight`}
                                             initial={{ opacity: 0 }}
                                             animate={{
                                                 opacity: 1,

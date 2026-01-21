@@ -19,13 +19,7 @@ async function main() {
     // 2. Page Content
     await prisma.pageContent.upsert({
         where: { pageSlug_section: { pageSlug: 'home', section: 'hero' } },
-        update: {
-            content: JSON.stringify({
-                title: 'Muhammad Saad',
-                subtitle: 'Computer Science Student',
-                description: 'Based in Mardan, KP. Passionate about Full Stack Development and Cybersecurity. Currently in 5th Semester BSCS.'
-            })
-        },
+        update: {},
         create: {
             pageSlug: 'home',
             section: 'hero',
@@ -39,16 +33,7 @@ async function main() {
 
     await prisma.pageContent.upsert({
         where: { pageSlug_section: { pageSlug: 'home', section: 'about' } },
-        update: {
-            content: JSON.stringify({
-                title: 'About Me',
-                bio: '"I am Muhammad Saad, a Computer Science student based in Mardan, KP, with a passion for Full Stack Development and Cybersecurity. Currently in my 5th semester, I specialize in building robust web applications using the MERN stack context (Node.js, Express, MongoDB) combined with Tailwind CSS."',
-                education: [
-                    { degree: 'Bachelor of Science in Computer Science (BSCS)', status: '5th Semester' }
-                ],
-                location: 'Mardan, Khyber Pakhtunkhwa (KP), Pakistan'
-            })
-        },
+        update: {},
         create: {
             pageSlug: 'home',
             section: 'about',
@@ -86,15 +71,7 @@ async function main() {
     // 4. Projects
     await prisma.project.upsert({
         where: { slug: 'zarar-al-oud' },
-        update: {
-            status: 'Live',
-            technologies: 'nodejs,express,mongodb,tailwind',
-            caseStudy: JSON.stringify({
-                problem: 'Client needed a premium fragrance e-commerce solution with high performance and secure admin management.',
-                solution: 'Built a custom Node.js/Express engine with an EJS frontend for SEO efficiency and a custom inventory dashboard.',
-                impact: 'Successfully launched the brand online, achieving a 25% increase in seasonal sales through direct digital orders.'
-            })
-        },
+        update: {},
         create: {
             title: 'Zarar AL Oud',
             slug: 'zarar-al-oud',
@@ -117,15 +94,7 @@ async function main() {
 
     await prisma.project.upsert({
         where: { slug: 'school-management-system' },
-        update: {
-            status: 'Completed',
-            technologies: 'mongodb,express,react,nodejs',
-            caseStudy: JSON.stringify({
-                problem: 'Manual attendance and grade tracking was causing significant errors and data loss for the administration.',
-                solution: 'Implemented a centralized MERN stack platform with role-based access for students, teachers, and admins.',
-                impact: 'Digitized records for 500+ students, reducing administrative overhead by approximately 40%.'
-            })
-        },
+        update: {},
         create: {
             title: 'School Management System',
             slug: 'school-management-system',

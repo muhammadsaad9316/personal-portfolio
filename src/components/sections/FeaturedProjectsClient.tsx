@@ -22,7 +22,7 @@ export default function FeaturedProjectsClient({ projects }: { projects: Seriali
 
         // Convert to array and assign gradients
         const gradients = [
-            "linear-gradient(135deg, #4f46e5, #818cf8)", // Indigo
+            "linear-gradient(135deg, #10b981, #34d399)", // Emerald (Primary)
             "linear-gradient(135deg, #e11d48, #fb7185)", // Rose
             "linear-gradient(135deg, #0891b2, #22d3ee)", // Cyan
             "linear-gradient(135deg, #10b981, #34d399)", // Emerald

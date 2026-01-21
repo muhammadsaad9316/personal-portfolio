@@ -80,7 +80,7 @@
 .textarea:focus,
 .select:focus {
     outline: none;
-    border-color: #6366f1;
+    border-color: var(--primary);
     background: #ffffff;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
@@ -117,8 +117,8 @@
 }
 
 .checkbox:checked {
-    background: #6366f1;
-    border-color: #6366f1;
+    background: var(--primary);
+    border-color: var(--primary);
 }
 
 .checkbox:checked::after {
@@ -145,7 +145,7 @@
 }
 
 .btnPrimary {
-    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
     color: white;
     padding: 0.6563rem 1.5rem;
     border-radius: 7.5px;
@@ -170,7 +170,7 @@
 
 .btnPrimary:disabled {
     background: #94a3b8;
-    cursor:not-allowed;
+    cursor: not-allowed;
     transform: none;
     box-shadow: none;
 }

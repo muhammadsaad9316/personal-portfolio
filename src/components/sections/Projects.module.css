@@ -136,7 +136,7 @@
 .statusCompleted {
     background: rgba(99, 102, 241, 0.15);
     border: 0.75px solid rgba(99, 102, 241, 0.3);
-    color: #6366f1;
+    color: var(--primary);
 }
 
 .techOverlay {

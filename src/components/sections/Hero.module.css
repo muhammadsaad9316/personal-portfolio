@@ -177,11 +177,11 @@
 
     0%,
     100% {
-        text-shadow: 0 0 22.5px rgba(99, 102, 241, 0.5);
+        text-shadow: 0 0 22.5px var(--primary-glow);
     }
 
     50% {
-        text-shadow: 0 0 37.5px rgba(99, 102, 241, 0.8), 0 0 15px rgba(168, 85, 247, 0.6);
+        text-shadow: 0 0 37.5px var(--primary-glow), 0 0 15px var(--accent-glow);
     }
 }
 
