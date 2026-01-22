@@ -66,8 +66,8 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        const targetWidth = Math.min(900, viewportWidth - 32);
-        const targetHeight = Math.min(viewportHeight * 0.9, 700);
+        const targetWidth = Math.min(1100, viewportWidth - 32); // Increased max width for side-by-side
+        const targetHeight = Math.min(viewportHeight * 0.9, 600); // Slightly reduced max height
 
         const targetX = (viewportWidth - targetWidth) / 2;
         const targetY = (viewportHeight - targetHeight) / 2;
@@ -163,8 +163,8 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
                     transformOrigin: "center center",
                 }}
             >
-                <div className={cn("relative overflow-hidden rounded-[inherit] bg-card border border-white/10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] flex flex-col h-full md:h-auto")}>
-                    <div className="relative overflow-hidden aspect-[4/3] md:aspect-[16/9] bg-black/50">
+                <div className={cn("relative overflow-hidden rounded-[inherit] bg-card border border-white/10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.5)] flex flex-col md:flex-row h-full md:h-[600px]")}>
+                    <div className="relative overflow-hidden aspect-[4/3] md:aspect-auto md:w-[65%] md:h-full bg-black/50 border-b md:border-b-0 md:border-r border-white/5">
                         <div
                             className="flex w-full h-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
                             style={{
@@ -177,7 +177,7 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
                                     <img
                                         src={project.image || PLACEHOLDER_IMAGE}
                                         alt={project.title}
-                                        className="w-full h-full object-contain md:object-cover select-none"
+                                        className="w-full h-full object-contain select-none p-4 md:p-8"
                                         onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE; }}
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
@@ -187,7 +187,7 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
                     </div>
 
                     <div
-                        className={cn("px-6 py-6 md:px-8 md:py-8 bg-card border-t border-white/5 flex flex-col md:flex-row gap-6 md:items-center justify-between")}
+                        className={cn("px-6 py-6 md:px-8 md:py-8 bg-card flex flex-col gap-6 justify-between md:w-[35%] md:h-full overflow-y-auto")}
                         style={{
                             opacity: animationPhase === "complete" && !isClosing ? 1 : 0,
                             transform: animationPhase === "complete" && !isClosing ? "translateY(0)" : "translateY(20px)",
@@ -217,6 +217,13 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
                                     </div>
                                 )}
                             </div>
+                        </div>
+
+                        <div className="mt-auto pt-6 border-t border-white/5">
+                            <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                                {currentProject?.title} is a featured project demonstrating modern web capabilities.
+                                Explore the details and view the live demo to see it in action.
+                            </p>
                         </div>
 
                         {currentProject?.demoUrl && (
